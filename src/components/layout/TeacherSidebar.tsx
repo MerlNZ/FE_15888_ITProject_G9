@@ -23,11 +23,10 @@ const TeacherSidebar: React.FC = () => {
                     <Button variant="ghost" className="justify-start" onClick={() => navigate('/activitiespagination')}> 📥 Activities</Button>
                     <Button variant="ghost" className="justify-start" onClick={() => navigate('/activities/create')}> ➕ Create Activity</Button>
                     <Button variant="ghost" className="justify-start" onClick={() => navigate('/submission-page')}> 📥 Submissions</Button>
-                    <Button variant="ghost" className="justify-start">🗓 Calendar</Button>
+                    {/* <Button variant="ghost" className="justify-start">🗓 Calendar</Button> */}
                 </nav>
             </div>
-    
-            <div>
+            <div className="mt-10">
                 <Button 
                     variant="destructive" 
                     className="w-full" 

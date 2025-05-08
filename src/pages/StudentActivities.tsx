@@ -264,9 +264,9 @@ const StudentActivities: React.FC = () => {
               />
             </div>
 
-            <button
+            <button 
               onClick={handleActivitySubmit}
-              className="mt-4 bg-aqua-600 text-black px-4 py-2 rounded hover:bg-aqua-700"
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
               disabled={isSubmitting}
             >
               {isSubmitting

@@ -29,8 +29,8 @@ const StudentJournalFeed: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <h2 className="text-lg font-semibold mb-2">📓 Student Journal Feed</h2>
+    <div className="bg-white rounded p-4 border max-h-72 overflow-y-auto space-y-2">
+      {/* <h2 className="text-lg font-semibold mb-2">📓 Student Journal Feed</h2> */}
       <div className="bg-white rounded p-4 border">
         {loading ? (
           <p>Loading journal entries...</p>
@@ -66,6 +66,8 @@ const StudentJournalFeed: React.FC = () => {
         </div>
       )}
     </div>
+
+
   );
 };
 

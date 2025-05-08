@@ -5,6 +5,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+
+
 interface Certificate {
   id: string;
   title: string;
@@ -51,10 +53,11 @@ const Rewards = () => {
       </section>
 
       {/* ⭐ Star Counter */}
-      <div className="text-center text-2xl text-yellow-600 font-semibold mb-6">
+      {/* <div className="text-center text-2xl text-yellow-600 font-semibold mb-6">
         <Sparkles className="inline-block mr-2 animate-pulse" />
         You’ve earned <span className="text-3xl font-bold text-yellow-500">{starCount}</span> Stars!
-      </div>
+
+      </div> */}
 
       {/* 🎓 Certificates */}
       <main className="container px-4 md:px-6 pb-10">

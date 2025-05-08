@@ -28,30 +28,6 @@ const games = [
     icon: "➕",
     description: "Test your math skills in a fun way!",
     iframeSrc: "https://www.jopi.com/gam/pixel-mini-golf/"
-  },
-
-  {
-    id: "math-challenge",
-    title: "Pixel Mini Golf",
-    icon: "➕",
-    description: "Test your math skills in a fun way!",
-    iframeSrc: "https://www.jopi.com/gam/pixel-mini-golf/"
-  },
-
-  {
-    id: "math-challenge",
-    title: "Pixel Mini Golf",
-    icon: "➕",
-    description: "Test your math skills in a fun way!",
-    iframeSrc: "https://www.jopi.com/gam/pixel-mini-golf/"
-  },
-
-  {
-    id: "math-challenge",
-    title: "Pixel Mini Golf",
-    icon: "➕",
-    description: "Test your math skills in a fun way!",
-    iframeSrc: "https://www.jopi.com/gam/pixel-mini-golf/"
   }
 
   ];

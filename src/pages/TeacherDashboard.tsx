@@ -32,7 +32,7 @@ const TeacherDashboard: React.FC = () => {
   useEffect(() => {
     const fetchSubmissions = async () => {
       try {
-        const response = await fetch('https://localhost:44361/api/Submissions/submitted');
+        const response = await fetch('https://localhost:44361/api/Submissions/IsForReview');
         const data = await response.json();
         setSubmissions(data);
       } catch (error) {
@@ -42,12 +42,6 @@ const TeacherDashboard: React.FC = () => {
 
     fetchSubmissions();
   }, []);
-
-  const handleFeedbackClick = (submissionId) => {
-    // This is where you would call your `useStudentFeedback` hook or logic for providing feedback
-    // This can be done by opening a modal or navigating to a feedback page
-    useStudentFeedback(submissionId);
-  };
 
   // useEffect(() => {
   //   const fetchClasses = async () => {
@@ -109,9 +103,12 @@ const TeacherDashboard: React.FC = () => {
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-semibold">Teacher Dashboard</h1>
           <div className="flex items-center gap-4">
-            <Input placeholder="Search..." className="w-64" />
-            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold">
+            {/* <Input placeholder="Search..." className="w-64" /> */}
+            {/* <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold">
               AD
+            </div> */}
+            <div>
+            <h2 className="text-xl font-bold text-red-800">Hi Teacher {userName}</h2>
             </div>
           </div>
         </div>
@@ -120,7 +117,7 @@ const TeacherDashboard: React.FC = () => {
           {/* Left Side: Main Dashboard */}
           <section className="col-span-2 space-y-6">
             {/* Stats */}
-            <div className="grid grid-cols-4 gap-4">
+            {/* <div className="grid grid-cols-4 gap-4">
               <Card>
                 <CardContent className="p-4 text-center">
                   <h2 className="text-2xl font-bold">12</h2>
@@ -145,15 +142,15 @@ const TeacherDashboard: React.FC = () => {
                   <p>Upcoming Dates</p>
                 </CardContent>
               </Card>
-            </div>
+            </div> */}
 
             {/* Quick Actions */}
             <Card>
               <CardContent className="p-4 flex gap-4 flex-wrap">
                 <Button variant="outline" onClick={() => navigate('/activities/create')}>➕ Create Activity</Button>
                 <Button variant="outline" onClick={() => navigate('/submission-page')}>📥 View Submissions</Button>
-                <Button variant="outline">🗓 Add to Calendar</Button>
-                <Button variant="outline">👨‍🏫 Manage Students</Button>
+                {/* <Button variant="outline">🗓 Add to Calendar</Button> */}
+                {/* <Button variant="outline">👨‍🏫 Manage Students</Button> */}
               </CardContent>
             </Card>
 
@@ -172,22 +169,42 @@ const TeacherDashboard: React.FC = () => {
               ))}
             </div> */}
               <div>
-      <h2 className="text-lg font-semibold mb-2">Recent Submissions</h2>
-      {submissions.map((submission, index) => (
+      <h2 className="text-lg font-semibold mb-2">Ungraded Submissions</h2>
+      {/* {submissions.map((submission, index) => (
         <Card key={index}>
           <CardContent className="p-4 flex justify-between items-center">
             <div>
-              <p><strong>{submission.studentName}</strong><br />{submission.assignmentTitle}</p>
+              <p><strong>{submission.studentName}</strong><br />{submission.activityName}</p>
             </div>
             <Button 
               variant="outline" 
-              onClick={() => handleFeedbackClick(submission.submissionId)}
+              onClick={() => navigate(`/teacherassignmentdetails/${submission.activityId}/${submission.studentId}`)}
             >
               Feedback
             </Button>
           </CardContent>
         </Card>
-      ))}
+      ))} */}
+      {submissions.length === 0 ? (
+  <p className="text-center text-gray-500 italic">No New Submission from students.</p>
+) : (
+  submissions.map((submission, index) => (
+    <Card key={index}>
+      <CardContent className="p-4 flex justify-between items-center">
+        <div>
+          <p><strong>{submission.studentName}</strong><br />{submission.activityName}</p>
+        </div>
+        <Button 
+          variant="outline" 
+          onClick={() => navigate(`/teacherassignmentdetails/${submission.activityId}/${submission.studentId}`)}
+        >
+          Give Feedback
+        </Button>
+      </CardContent>
+    </Card>
+  ))
+)}
+
     </div>
 
           </section>
@@ -198,19 +215,29 @@ const TeacherDashboard: React.FC = () => {
               <h2 className="text-lg font-semibold mb-2">🌼 Kindness Resources</h2>
               <Card>
                 <CardContent className="p-4 space-y-2">
-                <p><a href="#" className="text-blue-600 hover:underline">💡 Daily Kindness Tips</a></p>
+                <p className="relative group w-fit"><a href="#"   className="text-gray-400 cursor-not-allowed pointer-events-none">💡 Daily Kindness Tips</a> 
+                <span className="absolute left-full top-1/2 -translate-y-1/2 ml-2 bg-gray-700 text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                  Coming Soon
+                </span>
+                </p>
                 <p><button onClick={() => setShowUploadModal(true)} className="text-blue-600 hover:underline">  📄 Printable Materials 
                 </button></p>
                 <UploadModal isOpen={showUploadModal} onClose={() => setShowUploadModal(false)}/>
-                <p><a href="#" className="text-blue-600 hover:underline">🎬 Videos & Animations</a></p>
-                <p><a href="#" className="text-blue-600 hover:underline">📖 Kindness 101</a></p>
-                <p><a href="#" className="text-blue-600 hover:underline" onClick={() =>navigate('/myclasses')}> 🎖️ Award Student </a></p>
+                <p className="relative group w-fit"><a href="#" className="text-gray-400 cursor-not-allowed pointer-events-none">🎬 Videos & Animations</a>
+                <span className="absolute left-full top-1/2 -translate-y-1/2 ml-2 bg-gray-700 text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                  Coming Soon
+                </span></p>
+                <p className="relative group w-fit"><a href="#" className="text-gray-400 cursor-not-allowed pointer-events-none">📖 Kindness 101</a>
+                <span className="absolute left-full top-1/2 -translate-y-1/2 ml-2 bg-gray-700 text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                  Coming Soon
+                </span></p>
+                <p className="relative group w-fit"><a href="#" className="text-blue-600 hover:underline" onClick={() =>navigate('/myclasses')}> 🎖️ Award Student </a></p>
                 </CardContent>
               </Card>
             </div>
 
             {/* Upcoming Dates */}
-            <div>
+            {/* <div>
               <h2 className="text-lg font-semibold mb-2">📅 Upcoming Dates</h2>
               <Card>
                 <CardContent className="p-4 flex justify-between items-center">
@@ -222,13 +249,14 @@ const TeacherDashboard: React.FC = () => {
                   </div>
                 </CardContent>
               </Card>
-            </div>
+            </div> */}
 
             {/* Student Journal Feed */}
             <div>
               <Card>
                 <CardContent className="p-4 space-y-2 text-sm">
-                  <StudentJournalFeed />
+                   <h2 className="text-lg font-semibold mb-2"> 📓 Student Journal Feed</h2>
+                   <StudentJournalFeed />
                 </CardContent>
               </Card>
             </div>

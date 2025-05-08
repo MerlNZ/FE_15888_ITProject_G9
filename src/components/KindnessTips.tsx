@@ -9,8 +9,8 @@ interface Tip {
 }
 
 const tips: Tip[] = [
-  { id: 1, title: "Feed a hungry pet", icon: "🐶", gifUrl: "/gifs/feed-dog.gif" },
-  { id: 2, title: "Help a friend carry books", icon: "📚", gifUrl: "/gifs/help-books.gif" },
+  { id: 1, title: "Feed a hungry pet", icon: "🐶", gifUrl: "/HelpingPets.gif" },
+  { id: 2, title: "Help a friend carry books", icon: "📚", gifUrl: "/HelpingHand.gif" },
   { id: 3, title: "Say thank you", icon: "🙏", gifUrl: "/gifs/thank-you.gif" },
   { id: 4, title: "Recycle", icon: "♻️", gifUrl: "/gifs/recycle.gif" },
   { id: 5, title: "Share your snack", icon: "🍎", gifUrl: "/gifs/share-snack.gif" },
@@ -39,8 +39,8 @@ const KindnessTips: React.FC = () => {
 
       {/* Preview modal */}
       {selectedTip && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-4 rounded-lg shadow-lg max-w-lg w-full relative">
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center">
+          <div className="bg-white p-4 rounded-lg shadow-lg max-w-2xl w-full relative">
             <button
               className="absolute top-2 right-2 text-red-500 hover:text-red-700 text-xl"
               onClick={() => setSelectedTip(null)}
@@ -53,7 +53,7 @@ const KindnessTips: React.FC = () => {
             <img
               src={selectedTip.gifUrl}
               alt={selectedTip.title}
-              className="w-full rounded shadow"
+              className="w-full max-h-[75vh] rounded shadow"
             />
           </div>
         </div>
