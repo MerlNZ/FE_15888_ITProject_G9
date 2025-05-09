@@ -11,6 +11,8 @@ const Index: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const togglePlayPause = () => {
     if (videoRef.current) {
@@ -47,7 +49,7 @@ const Index: React.FC = () => {
       // Check for API success
       if (!response.ok || data.message !== "Login successful") {
         console.error("❌ Login failed:", data.message);
-        setError(data.message || "Login failed");
+        setShowErrorPopup(true); // Show the error popup
         setLoading(false);
         return;
       }
@@ -69,8 +71,9 @@ const Index: React.FC = () => {
 
     } catch (err) {
       console.error("🔥 Login error:", err);
-      setError("Something went wrong. Please try again.");
-    } finally {
+      setErrorMessage("Invalid Login Details, Please Try Again.");
+      setShowErrorPopup(true); // show popup
+     } finally {
       setLoading(false);
     }
   };
@@ -191,9 +194,35 @@ const Index: React.FC = () => {
             </div>
           </div>
         )}
+        {/* invalid login pop-up */}
+            {showErrorPopup && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+              <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm text-center">
+                <h3 className="text-xl font-bold text-red-600 mb-2">Login Error</h3>
+                <p className="text-gray-700 mb-4">{errorMessage}</p>
+                <button
+                  className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+                  onClick={() => {
+                    setShowErrorPopup(false);
+                    setuserlogin("");
+                    setPassword("");
+                    setError(""); // hide inline error if any
+                  }}
+                >
+                  OK
+                </button>
+              </div>
+            </div>
+          )}
+
         <Footer />
+
       </main>
+
+   
      </div>
   );
 };
+
+
 export default Index;

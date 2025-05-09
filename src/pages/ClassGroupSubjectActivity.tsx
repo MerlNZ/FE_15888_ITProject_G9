@@ -348,85 +348,65 @@ const ClassGroupSubjectActivity = () => {
                     const status = getValue(activity, ['status'], 'Pending');
                     
                     return (
-                      <Card
-                        key={`activity-${id}-${index}`}
-                        className="hover:border-primary/40 transition-all duration-300 cursor-pointer"
-                        onClick={() => navigate(`/classgroupsubjectsactivitytudentview/${activityId}`)}
-                      >
-                        <CardContent className="p-6">
-                          <div className="flex flex-col">
-                            <div className="flex items-start justify-between">
-                              <h3 className="font-semibold text-lg">{title}</h3>
-                              {getStatusBadge(status)}
-                            </div>
-                            <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground mt-2">
-                              <div className="flex items-center gap-1">
-                                <span className="font-medium">Student:</span> 
-                                <span>{studentName}</span>
-                              </div>
-                              <div className="flex items-center gap-1">
-                                <span className="font-medium">Class:</span> 
-                                <span>{className}</span>
-                              </div>
-                              <div className="flex items-center gap-1">
-                                <span className="font-medium">Subject:</span> 
-                                <span>{subject}</span>
-                              </div>
-                            </div>
-                            <p className="mt-2 line-clamp-2 text-sm">{description}</p>
-                            <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between mt-4 pt-2 border-t">
-                              <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                                <Clock className="h-3.5 w-3.5" />
-                                <span>Due: {formatDate(dueDate)}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <AlertDialog>
-                                  <AlertDialogTrigger asChild>
-                                    <Button
-                                      variant="outline"
-                                      size="sm"
-                                      className="text-destructive"
-                                      onClick={(e) => e.stopPropagation()}
-                                    >
-                                      <Trash2 className="h-4 w-4" />
+                      <Card key={`activity-${id}-${index}`} className="hover:border-primary/40 transition-all duration-300 cursor-pointer" onClick={() => navigate(`/classgroupsubjectsactivitytudentview/${activityId}`)}>
+                        <CardContent className="p-4">
+                          <table className="w-full text-sm table-fixed border-collapse">
+                            <tbody>
+                              <tr className="border-b">
+                                <td className="font-semibold w-1/4">Title</td>
+                                <td className="w-3/4">{title}</td>
+                                <td className="text-right" rowSpan={4}>{getStatusBadge(status)}</td>
+                              </tr>
+                              <tr className="border-b">
+                                <td>Student</td>
+                                <td>{studentName}</td>
+                              </tr>
+                              <tr className="border-b">
+                                <td>Class</td>
+                                <td>{className}</td>
+                              </tr>
+                              <tr className="border-b">
+                                <td>Subject</td>
+                                <td>{subject}</td>
+                              </tr>
+                              <tr className="border-b">
+                                <td>Description</td>
+                                <td colSpan={2}>{description}</td>
+                              </tr>
+                              <tr className="border-b">
+                                <td>Due Date</td>
+                                <td colSpan={2}>{formatDate(dueDate)}</td>
+                              </tr>
+                              <tr>
+                                <td colSpan={3} className="pt-2 text-right">
+                                  <div className="flex justify-end gap-2">
+                                    <AlertDialog>
+                                      <AlertDialogTrigger asChild>
+                                        <Button variant="outline" size="sm" className="text-destructive" onClick={(e) => e.stopPropagation()}>
+                                          <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                      </AlertDialogTrigger>
+                                      <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                          <AlertDialogTitle>Delete activity?</AlertDialogTitle>
+                                          <AlertDialogDescription>This action cannot be undone. This will permanently delete this activity and remove it from our servers.</AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                          <AlertDialogCancel onClick={(e) => e.stopPropagation()}>Cancel</AlertDialogCancel>
+                                          <AlertDialogAction onClick={(e) => handleDeleteActivity(id, e)} className="bg-destructive text-destructive-foreground">
+                                            Delete
+                                          </AlertDialogAction>
+                                        </AlertDialogFooter>
+                                      </AlertDialogContent>
+                                    </AlertDialog>
+                                    <Button variant="outline" size="sm" className="text-primary" onClick={(e) => { e.stopPropagation(); navigate(`/classgroupsubjectsactivitytudentview/${activityId}`); }}>
+                                      View Details <ChevronRight className="h-4 w-4 ml-1" />
                                     </Button>
-                                  </AlertDialogTrigger>
-                                  <AlertDialogContent>
-                                    <AlertDialogHeader>
-                                      <AlertDialogTitle>Delete activity?</AlertDialogTitle>
-                                      <AlertDialogDescription>
-                                        This action cannot be undone. This will permanently delete this 
-                                        activity and remove it from our servers.
-                                      </AlertDialogDescription>
-                                    </AlertDialogHeader>
-                                    <AlertDialogFooter>
-                                      <AlertDialogCancel onClick={(e) => e.stopPropagation()}>
-                                        Cancel
-                                      </AlertDialogCancel>
-                                      <AlertDialogAction 
-                                        onClick={(e) => handleDeleteActivity(id, e)}
-                                        className="bg-destructive text-destructive-foreground"
-                                      >
-                                        Delete
-                                      </AlertDialogAction>
-                                    </AlertDialogFooter>
-                                  </AlertDialogContent>
-                                </AlertDialog>
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  className="text-primary"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    navigate(`/classgroupsubjectsactivitytudentview/${activityId}`);
-                                  }}
-                                >
-                                  View Details
-                                  <ChevronRight className="h-4 w-4 ml-1" />
-                                </Button>
-                              </div>
-                            </div>
-                          </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </CardContent>
                       </Card>
                     );

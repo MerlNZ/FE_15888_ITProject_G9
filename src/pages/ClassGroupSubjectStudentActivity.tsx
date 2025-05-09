@@ -112,6 +112,8 @@ const ClassGroupSubjectStudentActivity = () => {
     fetchActivities();
   }, []);
 
+
+  
   useEffect(() => {
     let result = activities;
 
@@ -176,288 +178,193 @@ const ClassGroupSubjectStudentActivity = () => {
     ));
   };
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'Pending':
-        return (
-          <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200">
-            <Clock className="h-3 w-3 mr-1" />
-            Pending
-          </Badge>
-        );
-      case 'Submitted':
-        return (
-          <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-            <Check className="h-3 w-3 mr-1" />
-            Submitted
-          </Badge>
-        );
-      case 'Graded':
-        return (
-          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-            <Star className="h-3 w-3 mr-1" />
-            Graded
-          </Badge>
-        );
-      case 'Overdue':
-        return (
-          <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
-            <AlertCircle className="h-3 w-3 mr-1" />
-            Overdue
-          </Badge>
-        );
-      default:
-        return <Badge variant="outline">{status || 'Unknown'}</Badge>;
-    }
-  };
+  // const getStatusBadge = (status: string) => {
+  //   switch (status) {
+  //     case 'Pending':
+  //       return (
+  //         <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200">
+  //           <Clock className="h-3 w-3 mr-1" />
+  //           Pending
+  //         </Badge>
+  //       );
+  //     case 'Submitted':
+  //       return (
+  //         <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+  //           <Check className="h-3 w-3 mr-1" />
+  //           Submitted
+  //         </Badge>
+  //       );
+  //     case 'Graded':
+  //       return (
+  //         <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+  //           <Star className="h-3 w-3 mr-1" />
+  //           Graded
+  //         </Badge>
+  //       );
+  //     case 'Overdue':
+  //       return (
+  //         <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
+  //           <AlertCircle className="h-3 w-3 mr-1" />
+  //           Overdue
+  //         </Badge>
+  //       );
+  //     default:
+  //       return <Badge variant="outline">{status || 'Unknown'}</Badge>;
+  //   }
+  // };
 
-  const handleDeleteActivity = async (activityId: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    try {
-      setActivities(activities.filter(activity => 
-        activity.activityId !== activityId
-      ));
-      toast.success("Activity deleted successfully");
-    } catch (error) {
-      console.error("Failed to delete activity:", error);
-      toast.error("Failed to delete activity");
-    }
-  };
+  // const handleDeleteActivity = async (activityId: string, e: React.MouseEvent) => {
+  //   e.stopPropagation();
+  //   try {
+  //     setActivities(activities.filter(activity => 
+  //       activity.activityId !== activityId
+  //     ));
+  //     toast.success("Activity deleted successfully");
+  //   } catch (error) {
+  //     console.error("Failed to delete activity:", error);
+  //     toast.error("Failed to delete activity");
+  //   }
+  // };
 
   return (
     
-    <div className="flex h-screen bg-muted">
-         <TeacherSidebar />
-
-        {/* <div className="bg-primary text-white p-4">
-          {/* <div className="container mx-auto">
-          
-           <h1 className="text-2xl font-bold">School Management System</h1>
-        </div>  
-      </div> */}
-      
-      <main className="flex-1 py-8">
-        <div className="container px-4 md:px-6 max-w-7xl mx-auto">
-          
-          <section className="mb-6">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-              
-              <div>
-                
-                <h1 className="text-3xl font-bold flex items-center gap-2">
-                  <Users className="h-7 w-7 text-primary" />
-                  School Management - Student Activities
-                </h1>
-                <p className="text-muted-foreground mt-1">
-                  Manage student activities across different classes
-                </p>
-              </div>
-              <div className="flex items-center gap-4">
-                <Button className="gap-1" onClick={() => navigate('/activities/create')}>
-                  <Plus className="h-4 w-4" />
-                  Create Activity
-                </Button>
-                <div className="flex items-center text-sm text-muted-foreground">
-                  <Calendar className="h-4 w-4 mr-1" />
-                  Saturday, April 12, 2025
-                </div>
-              </div>
-            </div>
-
-            <div className="grid gap-6">
-              <div className="flex flex-col md:flex-row gap-4 mb-6">
-                <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Search by student name, activity name..."
-                    className="pl-10"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  <Select value={studentFilter} onValueChange={setStudentFilter}>
-                    <SelectTrigger className="w-[180px]">
-                      <div className="flex items-center">
-                        <Users className="h-4 w-4 mr-2" />
-                        <span>{studentFilter === 'all' ? 'All Students' : students.find(s => s.id === studentFilter)?.name || 'Unknown'}</span>
-                      </div>
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem key="all-students" value="all">All Students</SelectItem>
-                      {students.map(student => (
-                        <SelectItem key={`student-${student.id}`} value={student.id}>{student.name}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  
-                  <Select value={classFilter} onValueChange={setClassFilter}>
-                    <SelectTrigger className="w-[180px]">
-                      <div className="flex items-center">
-                        <Filter className="h-4 w-4 mr-2" />
-                        <span>{classFilter === 'all' ? 'All Classes' : classFilter}</span>
-                      </div>
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem key="all-classes" value="all">All Classes</SelectItem>
-                      {classes.filter(c => c !== 'all').map(classItem => (
-                        <SelectItem key={`class-${classItem}`} value={classItem}>{classItem}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  
-                  <Select value={statusFilter} onValueChange={setStatusFilter}>
-                    <SelectTrigger className="w-[180px]">
-                      <div className="flex items-center">
-                        <Filter className="h-4 w-4 mr-2" />
-                        <span>{statusFilter === 'all' ? 'All Status' : statusFilter}</span>
-                      </div>
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem key="status-all" value="all">All Status</SelectItem>
-                      <SelectItem key="status-pending" value="Pending">Pending</SelectItem>
-                      <SelectItem key="status-submitted" value="Submitted">Submitted</SelectItem>
-                      <SelectItem key="status-graded" value="Graded">Graded</SelectItem>
-                      <SelectItem key="status-overdue" value="Overdue">Overdue</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                {loading ? (
-                  renderSkeleton()
-                ) : paginatedActivities.length > 0 ? (
-                  paginatedActivities.map((activity, index) => (
-                    <Card
-                      key={`activity-${activity.activityId}-${activity.studentId}-${index}`}
-                      className="hover:border-primary/40 transition-all duration-300 cursor-pointer"
-                      onClick={() => navigate(`/teacherassignmentdetails/${activity.activityId}`)}
-                    >
-                      <CardContent className="p-6">
-                        <div className="flex flex-col">
-                          <div className="flex items-start justify-between">
-                            <h3 className="font-semibold text-lg">{activity.activityActivityName}</h3>
-                            {getStatusBadge(activity.status || 'Pending')}
-                          </div>
-                          <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground mt-2">
-                            <div className="flex items-center gap-1">
-                              <span className="font-medium">Student:</span> 
-                              <span>{activity.studentUsername}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <span className="font-medium">Class:</span> 
-                              <span>{activity.classGroupSubjectClassGroupClassName}</span>
-                            </div>
-                          </div>
-                          <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between mt-4 pt-2 border-t">
-                            <div className="flex items-center gap-2">
-                              <AlertDialog>
-                                <AlertDialogTrigger asChild>
-                                  <Button
-                                    variant="outline"
-                                    size="sm"
-                                    className="text-destructive"
-                                    onClick={(e) => e.stopPropagation()}
-                                  >
-                                    <Trash2 className="h-4 w-4" />
-                                  </Button>
-                                </AlertDialogTrigger>
-                                <AlertDialogContent>
-                                  <AlertDialogHeader>
-                                    <AlertDialogTitle>Delete activity?</AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                      This action cannot be undone. This will permanently delete this 
-                                      activity and remove it from our servers.
-                                    </AlertDialogDescription>
-                                  </AlertDialogHeader>
-                                  <AlertDialogFooter>
-                                    <AlertDialogCancel onClick={(e) => e.stopPropagation()}>
-                                      Cancel
-                                    </AlertDialogCancel>
-                                    <AlertDialogAction 
-                                      onClick={(e) => handleDeleteActivity(activity.activityId, e)}
-                                      className="bg-destructive text-destructive-foreground"
-                                    >
-                                      Delete
-                                    </AlertDialogAction>
-                                  </AlertDialogFooter>
-                                </AlertDialogContent>
-                              </AlertDialog>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="text-primary"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  navigate(`/teacherassignmentdetails/${activity.activityId}/${activity.studentId}`);
-                                }}
-                              >
-                                View Details
-                                <ChevronRight className="h-4 w-4 ml-1" />
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))
-                ) : (
-                  <div className="text-center py-12 border rounded-lg">
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted mb-4">
-                      <Users className="h-8 w-8 text-muted-foreground" />
-                    </div>
-                    <h3 className="text-lg font-medium">No activities found</h3>
-                    <p className="text-muted-foreground mt-1">
-                      Try adjusting your filters or search criteria
-                    </p>
-                  </div>
-                )}
-              </div>
-              
-              {filteredActivities.length > 0 && (
-                <div className="mt-6">
-                  <Pagination>
-                    <PaginationContent>
-                      <PaginationItem>
-                        <PaginationPrevious 
-                          onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                          className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
-                        />
-                      </PaginationItem>
-                      
-                      {Array.from({ length: totalPages }).map((_, i) => (
-                        <PaginationItem key={`page-${i+1}`}>
-                          <PaginationLink 
-                            isActive={currentPage === i + 1}
-                            onClick={() => setCurrentPage(i + 1)}
-                          >
-                            {i + 1}
-                          </PaginationLink>
-                        </PaginationItem>
-                      ))}
-                      
-                      <PaginationItem>
-                        <PaginationNext 
-                          onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                          className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
-                        />
-                      </PaginationItem>
-                    </PaginationContent>
-                  </Pagination>
-                </div>
-              )}
-            </div>
-          </section>
-        </div>
-      </main>
-      
-      <div className="bg-muted py-6">
-        <div className="container mx-auto text-center text-sm text-muted-foreground">
-          <p>© 2025 School Management System. All rights reserved.</p>
-        </div>
+    <div className="flex min-h-screen bg-muted">
+  <TeacherSidebar />
+  <main className="flex-1 p-6 max-w-6xl mx-auto">
+    <div className="mb-6">
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
+          <Users className="h-6 w-6 text-primary" /> Student Activities
+        </h1>
+        {/* <div className="flex gap-2 items-center">
+          <Button onClick={() => navigate('/activities/create')} size="sm">
+            <Plus className="h-4 w-4 mr-1" /> Create
+          </Button>
+          <div className="text-sm text-muted-foreground hidden md:flex items-center gap-2">
+            <Calendar className="h-4 w-4" />
+            Saturday, April 12, 2025
+          </div>
+        </div> */}
       </div>
     </div>
+
+    <div className="flex flex-col md:flex-row gap-4 mb-6">
+      <div className="relative w-full md:max-w-sm">
+        <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+        <Input
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-10"
+        />
+      </div>
+      <Select value={studentFilter} onValueChange={setStudentFilter}>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Student" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All Students</SelectItem>
+          {students.map(student => (
+            <SelectItem key={student.id} value={student.id}>{student.name}</SelectItem>
+          ))}
+        </SelectContent>
+        </Select> 
+        <div title="Coming soon">
+      <Select value={classFilter} onValueChange={setClassFilter} disabled>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Class" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all" disabled>All Classes</SelectItem>
+          {classes.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+        </SelectContent>
+      </Select> 
+          </div>
+      <div title="Coming soon">
+      <Select value={statusFilter} onValueChange={setStatusFilter}>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Status" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all" disabled>All Status</SelectItem>
+          <SelectItem value="Pending" disabled>Pending</SelectItem>
+          <SelectItem value="Submitted"disabled>Submitted</SelectItem>
+          <SelectItem value="Graded" disabled>Graded</SelectItem>
+          <SelectItem value="Overdue" disabled>Overdue</SelectItem>
+          </SelectContent>
+      </Select>
+      </div>
+    </div>
+
+    <div className="space-y-4">
+      {loading ? renderSkeleton() : (
+        paginatedActivities.length > 0 ? (
+          paginatedActivities.map((activity, index) => (
+            <Card
+              key={`activity-${activity.activityId}-${activity.studentId}-${index}`}
+              className="p-4 hover:shadow-md cursor-pointer transition border rounded-md bg-white dark:bg-gray-900"
+              onClick={() => navigate(`/teacherassignmentdetails/${activity.activityId}/${activity.studentId}`)}
+            >
+              {/* <div className="flex justify-between items-center mb-2">
+                <h2 className="font-semibold text-lg text-gray-800 dark:text-white">{activity.activityActivityName}</h2>
+                {getStatusBadge(activity.status || 'Pending')}
+              </div> */}
+              <p className="text-sm text-muted-foreground mb-1">Class: {activity.classGroupSubjectClassGroupClassName}</p>
+              <p className="text-sm text-muted-foreground">Student: {activity.studentUsername}</p>
+              <div className="flex justify-end gap-2 mt-4">
+                {/* <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="ghost" size="sm" className="text-red-500" onClick={(e) => e.stopPropagation()}>
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Delete activity?</AlertDialogTitle>
+                      <AlertDialogDescription>This will permanently remove the activity.</AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={(e) => handleDeleteActivity(activity.activityId, e)}>Delete</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog> */}
+                <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); navigate(`/teacherassignmentdetails/${activity.activityId}/${activity.studentId}`); }}>
+                  View <ChevronRight className="h-4 w-4 ml-1" />
+                </Button>
+              </div>
+            </Card>
+          ))
+        ) : (
+          <div className="text-center py-8">
+            <Users className="w-10 h-10 mx-auto text-muted-foreground mb-2" />
+            <p className="text-sm text-muted-foreground">No activities found</p>
+          </div>
+        )
+      )}
+
+      {filteredActivities.length > 0 && (
+        <Pagination className="pt-4">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} />
+            </PaginationItem>
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <PaginationItem key={i}>
+                <PaginationLink isActive={currentPage === i + 1} onClick={() => setCurrentPage(i + 1)}>
+                  {i + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            <PaginationItem>
+              <PaginationNext onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
+    </div>
+  </main>
+</div>
   );
 };
 

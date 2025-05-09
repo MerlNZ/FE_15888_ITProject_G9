@@ -101,14 +101,14 @@ const TeacherDashboard: React.FC = () => {
       <main className="flex-1 bg-gray-50 p-6 overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-semibold">Teacher Dashboard</h1>
+          {/* <h1 className="text-2xl font-semibold">Teacher Dashboard</h1> */}
           <div className="flex items-center gap-4">
             {/* <Input placeholder="Search..." className="w-64" /> */}
             {/* <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold">
               AD
             </div> */}
             <div>
-            <h2 className="text-xl font-bold text-red-800">Hi Teacher {userName}</h2>
+            <h2 className="text-xl font-bold text-black-600">Hello, {userName}!</h2>
             </div>
           </div>
         </div>

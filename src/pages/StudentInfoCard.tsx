@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { format } from "date-fns";
@@ -9,10 +10,29 @@ interface StudentInfoCardProps {
 }
 
 export const StudentInfoCard = ({ activity }: StudentInfoCardProps) => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  useEffect(() => {
+    const fetchStudentProfile = async () => {
+      try {
+        const response = await fetch(`https://localhost:44361/api/Student/profile/${activity.studentId}`);
+        if (!response.ok) throw new Error("Failed to fetch student profile");
+        const data = await response.json();
+        setFirstName(data.firstName);
+        setLastName(data.lastName);
+      } catch (error) {
+        console.error("Error fetching student profile:", error);
+      }
+    };
+
+    if (activity.studentId) {
+      fetchStudentProfile();
+    }
+  }, [activity.studentId]);
+
   const isGraded = activity.grade !== undefined && activity.grade !== null;
-  const studentName = activity.studentUserFirstName && activity.studentUserLastName 
-    ? `${activity.studentUserFirstName} ${activity.studentUserLastName}`
-    : "Student";
+  const studentName = firstName && lastName ? `${firstName} ${lastName}` : "Student";
 
   return (
     <Card>

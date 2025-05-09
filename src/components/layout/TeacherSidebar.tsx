@@ -16,7 +16,12 @@ const TeacherSidebar: React.FC = () => {
     return (
         <aside className="w-64 bg-white border-r p-4 h-screen">
             <div> 
-                <h2 className="text-xl font-bold mb-6">Teacher</h2>
+            <img 
+  src="/KHLogoTeacher.png" 
+  alt="App Logo" 
+  className="w-full h-auto object-contain mb-4"
+/>
+                <h2 className="text-xl font-bold mb-6">Teacher's Dashboard</h2>
                 <nav className="flex flex-col space-y-4">
                     <Button variant="ghost" className="justify-start" onClick={() => navigate('/TeacherDashboard')}> 🏠 Home</Button>
                     <Button variant="ghost" className="justify-start" onClick={() => navigate('/myclasses')}> 📚 My Classes</Button>

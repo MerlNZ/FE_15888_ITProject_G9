@@ -51,7 +51,7 @@ const MyClasses: React.FC = () => {
                   <tr>
                     <th className="px-4 py-2">Student Name</th>
                     <th className="px-4 py-2">Email</th>
-                    <th className="px-4 py-2">Submission Progress</th>
+                    {/* <th className="px-4 py-2">Submission Progress</th> */}
                     <th className="px-4 py-2">Actions</th>
                   </tr>
                 </thead>
@@ -60,9 +60,9 @@ const MyClasses: React.FC = () => {
                     <tr key={student.userId} className="border-t hover:bg-gray-50">
                       <td className="px-4 py-2">{student.firstName} {student.lastName}</td>
                       <td className="px-4 py-2">{student.email}</td>
-                      <td className="px-4 py-2 text-sm text-gray-700">
+                      {/* <td className="px-4 py-2 text-sm text-gray-700">
                         0 of 0 submitted
-                      </td>
+                      </td> */}
                       <td className="px-4 py-2">
                         {/* <button
                           className="bg-green-600 text-white text-sm px-3 py-1 rounded hover:bg-green-700"
