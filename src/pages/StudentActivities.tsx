@@ -16,6 +16,7 @@ interface Activity {
   description: string;
   dueDate: string;
   pdfUrl: string;
+  teacherPdfUrl: string;
   isSubmitted: boolean;
   submissionUrl?: string;
   submissionDate?: string;
@@ -41,7 +42,11 @@ const StudentActivities: React.FC = () => {
     if (storedUsername) {
       fetch(`https://localhost:44361/api/student/${storedUsername}/activities-with-submission`)
         .then(res => res.json())
-        .then(data => setActivities(data))
+        .then(data =>
+        //  console.log(data)
+          setActivities(data)
+          
+          )
         .catch(err => console.error("Failed to fetch activities", err));
     }
   }, []);
@@ -141,7 +146,7 @@ const StudentActivities: React.FC = () => {
               <p className="text-sm text-gray-600">{activity.description}</p>
               <div className="mt-2 text-sm">
                 📅 <strong>Due:</strong> {new Date(activity.dueDate).toLocaleDateString()}<br />
-                📄 <a href={activity.pdfUrl} target="_blank" className="text-blue-600 underline">Download Instructions</a>
+                📄 <a href={activity.teacherPdfUrl} target="_blank" className="text-blue-600 underline">Download Instructions</a>
               </div>
 
               <div className="mt-2">
