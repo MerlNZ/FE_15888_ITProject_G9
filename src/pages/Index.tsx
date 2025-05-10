@@ -62,9 +62,9 @@ const Index: React.FC = () => {
       console.log("💾 Stored userName in localStorage:", data.userName); 
 
       // Redirect
-      if (data.rolename === "Student") {
+      if (data.rolename?.toLowerCase() === "student") {
         window.location.href = "/StudentDashboard";
-      } else if (data.rolename === "Teacher") {
+      } else if (data.rolename?.toLowerCase() === "teacher") {
         window.location.href = "/TeacherDashboard";
       } else {
         window.location.href = "/admin-dashboard";
