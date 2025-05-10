@@ -94,7 +94,7 @@ const CreateActivity = () => {
       description: "",
       dueDate: undefined,
       classGroupId: "",
-      teacherId: "41E8083D-04E1-4421-1FAB-08DD7EDEE8F0",
+      teacherId: "41e8083d-04e1-4421-1fab-08dd7edee8f0",
       activityName: "",
       subjectId: "",
       weightagePercent: 50,
@@ -146,6 +146,8 @@ const CreateActivity = () => {
   };
 
   const onSubmit = async (data: ActivityFormValues) => {
+     const userId = localStorage.getItem("userId");
+    data.teacherId=userId;
     setIsSubmitting(true);
     try {
       const requestData: CreateActivityRequest = {
